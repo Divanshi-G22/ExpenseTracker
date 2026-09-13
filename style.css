@@ -1,0 +1,224 @@
+/* replace your body styles */
+body {
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #1A2535;
+  position: relative;
+  overflow: hidden;
+}
+
+/* add blobs — paste after body */
+body::before {
+  content: '';
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  background: #354024;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.55;
+  top: -60px;
+  left: -60px;
+}
+
+body::after {
+  content: '';
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  background: #4C3D19;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.55;
+  bottom: -40px;
+  right: -40px;
+}
+
+
+/* replace your .loginBox */
+.loginBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 360px;
+  background: rgba(207, 187, 153, 0.12);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(207, 187, 153, 0.25);
+  border-radius: 24px;
+  padding: 40px 36px 32px;
+  margin-bottom: 24px;
+}
+
+/* replace .siteIcon */
+.siteIcon {
+  width: 56px;
+  height: 56px;
+  background: rgba(76, 61, 25, 0.7);
+  border: 1px solid rgba(207, 187, 153, 0.3);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  font-size: 24px;
+  color: #CFBB99;
+}
+
+/* replace .siteName */
+.siteName {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #E5D7C4;
+  letter-spacing: -0.3px;
+  margin-bottom: 4px;
+}
+
+/* replace .dividerLine */
+.dividerLine {
+  width: 35px;
+  height: 2px;
+  background: rgba(207, 187, 153, 0.4);
+  border-radius: 2px;
+  margin: 6px 0 8px;
+}
+
+/* replace .welcome */
+.welcome {
+  font-size: 12px;
+  color: rgba(207, 187, 153, 0.55);
+  margin-bottom: 28px;
+  letter-spacing: 0.02em;
+}
+
+/* replace label */
+label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(207, 187, 153, 0.6);
+  margin-bottom: 6px;
+  display: block;
+  padding: 12px 16px;
+}
+
+/* replace input */
+input {
+  width: 300px;
+  padding: 12px 16px;
+  background: rgba(229, 215, 196, 0.1);
+  border: 1px solid rgba(207, 187, 153, 0.2);
+  border-radius: 50px;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  color: #E5D7C4;
+  outline: none;
+  margin-bottom: 14px;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+input::placeholder {
+  color: rgba(207, 187, 153, 0.27);
+  margin-top: 2px;
+}
+
+input:focus {
+  background: rgba(229, 215, 196, 0.18);
+  border-color: rgba(207, 187, 153, 0.5);
+}
+
+/* replace .loginBtn */
+.loginBtn {
+  width: 100%;
+  padding: 13px;
+  background: #CFBB99;
+  color: #3A2E1A;
+  border: none;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  margin-bottom: 14px;
+  margin-top: 6px;
+  transition: background 0.15s;
+}
+
+.loginBtn:hover {
+  background: #E5D7C4;
+}
+
+.orRow{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  justify-content:center;
+  margin-bottom: 14px;
+}
+
+.orText{
+  text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+  font-weight: 80;
+  letter-spacing: 0.1em;
+}
+/* replace .googleBtn */
+.googleBtn {
+  width: 100%;
+  padding: 11px;
+  background: rgba(229, 215, 196, 0.08);
+  border: 1px solid rgba(207, 187, 153, 0.2);
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  color: rgba(207, 187, 153, 0.67);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.googleBtn:hover {
+  background: rgba(229, 215, 196, 0.14);
+  border-color: rgba(207, 187, 153, 0.35);
+  color: #CFBB99;
+}
+
+/* replace .footerLinks */
+.footerLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.footerLinks a {
+  font-size: 11px;
+  color: rgba(207, 187, 153, 0.4);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.footerLinks a:hover {
+  color: #CFBB99;
+}
+
+.footerLinks a span {
+  font-weight: 600;
+  color: rgba(207, 187, 153, 0.6);
+}
+
+

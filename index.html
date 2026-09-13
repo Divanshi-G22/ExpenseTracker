@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <title>SmartExpense</title>
+</head>
+<body>
+<div class="loginBox">
+
+    <!-- site logo -->
+    <div class="siteIcon">
+      <i class="fa-sharp-duotone fa-solid fa-coins"></i>
+    </div>
+
+    <!-- site name -->
+    <div class="siteName">Smart Expense</div>
+    <div class="dividerLine"></div>
+    <div class="welcome">Welcome back</div>
+
+    <!-- form -->
+    <form id="loginForm" class="loginForm" onsubmit="return false;">
+      <div class="credentials">
+
+        <label for="Email">Email</label>
+        <input type="email" id="Email" placeholder="your@mail.com" required/>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="••••••••" required/>
+
+      </div>
+
+      <button type="submit" class="loginBtn">Sign In</button>
+
+      <!-- OR divider -->
+      <div class="orRow">
+        <span class="orLine"></span>
+        <span class="orText">OR</span>
+        <span class="orLine"></span>
+      </div>
+
+      <!-- Google button -->
+      <button type="button" class="googleBtn">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width="18" height="18"/>
+        Continue with Google
+      </button>
+
+    </form>
+
+    <!-- footer links -->
+    <div class="footerLinks">
+      <a href="#">Forgot your password?</a>
+      <a href="#">New here? <span>Create an account</span></a>
+    </div>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
