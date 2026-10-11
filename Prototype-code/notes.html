@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spendsight — Notes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="blob3"></div>
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="s-brand">
+        <div class="s-logo">SmartExpense</div>
+        <div class="s-sub">smart expense tracker</div>
+      </div>
+      <nav class="s-nav">
+        <a href="dashboard.html" class="s-item"><span class="s-icon">⊞</span> Dashboard</a>
+        <a href="transactions.html" class="s-item"><span class="s-icon">↕</span> Transactions</a>
+        <a href="events.html" class="s-item"><span class="s-icon">◎</span> Events</a>
+        <a href="notes.html" class="s-item active"><span class="s-icon">≡</span> Notes</a>
+        <a href="profile.html" class="s-item"><span class="s-icon">○</span> Profile</a>
+      </nav>
+      <div class="s-user">
+        <div class="s-uname"></div>
+        <div class="s-uemail"></div>
+        <a href="index.html" class="s-item"><span class="s-icon">→</span> Log out</a>
+      </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+      <div class="page-header-row">
+        <div>
+          <div class="pg-title">Notes</div>
+          <div class="pg-sub">Checklists linked to your events</div>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" id="addNoteBtn">+ New Note</button>
+        </div>
+      </div>
+
+      <div class="notes-grid" id="notesGrid"></div>
+
+      <div class="glass empty-state" id="notesEmptyState" style="display:none; margin-top:14px;">
+        <div class="empty-icon">≡</div>
+        <p>No notes yet.<br/>Create one linked to an event.</p>
+      </div>
+    </div>
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>

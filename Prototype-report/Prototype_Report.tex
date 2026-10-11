@@ -1,0 +1,516 @@
+\documentclass[12pt,a4paper]{report}
+
+% ------------------------------------------------
+% PACKAGES
+% ------------------------------------------------
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+% ------------------------------------------------
+% FORMATTING
+% ------------------------------------------------
+\onehalfspacing
+
+\titleformat{\chapter}
+{\normalfont\huge\bfseries}
+{\thechapter.}{15pt}{}
+
+\titleformat{\section}
+{\normalfont\Large\bfseries}
+{\thesection}{10pt}{}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue
+}
+
+\begin{document}
+
+% =================================================
+% TITLE PAGE
+% =================================================
+
+\begin{titlepage}
+\thispagestyle{empty}
+
+\begin{center}
+
+
+{\Large \textbf{SmartExpense: Frontend Prototype Report}\par}
+
+\vspace{0.2cm}
+
+{\normalsize Software Engineering Project\par}
+
+\vspace{0.15cm}
+
+{\normalsize Academic Year 2026--2027\par}
+
+\vspace{0.5cm}
+
+{\Large \textbf{THAPAR INSTITUTE OF ENGINEERING AND}\\
+\textbf{TECHNOLOGY}\par}
+
+\vspace{0.4cm}
+
+{\Large \textbf{SmartExpense: Smart Expense Tracker \&}\\
+\textbf{Event-Based Savings Planner}\par}
+
+\vspace{0.25cm}
+
+{\normalsize
+A Browser-Based Personal Finance Dashboard with\\
+Event Savings Goals and Linked Checklists
+\par}
+
+\vspace{0.7cm}
+
+\textbf{Submitted by:}
+
+\vspace{0.15cm}
+
+ \quad Divanshi Garg\ [1024030441]
+ \vspace{0.15cm}
+ \quad Navya Arora [1024030438]
+
+\vspace{0.35cm}
+
+B.E. Third Year, Computer Science \& Engineering
+
+\vspace{0.5cm}
+
+\textbf{Submitted to:}
+
+\vspace{0.15cm}
+
+Dr. Jeelani Asif\\
+Department of Computer Science and Engineering
+
+\vspace{1.2cm}
+
+{\normalsize Frontend Prototype Evaluation Report\par}
+
+\vspace{0.1cm}
+
+{\normalsize Computer Science and Engineering Department\par}
+
+\end{center}
+
+\end{titlepage}
+
+\clearpage
+% =================================================
+% TABLE OF CONTENTS
+% =================================================
+
+\tableofcontents
+
+
+
+% =================================================
+% CHAPTER 1
+% =================================================
+
+\chapter{Introduction}
+
+\section{Background and Context}
+
+Keeping track of everyday spending is a problem most people solve badly:
+expenses are scattered across cash, UPI, cards and bill payments. By the
+time a monthly statement arrives, it may be too late to change spending
+behaviour.
+
+This becomes more difficult around specific occasions such as a festival,
+wedding, birthday or trip, where a person is not only managing everyday
+expenses but is also trying to save towards a fixed and dated goal.
+Most existing expense trackers either provide a generic monthly ledger
+without linking it to upcoming events or focus only on expense
+categorisation.
+
+SmartExpense is proposed as a personal finance web application that
+addresses this gap. It provides a single dashboard for monthly spending,
+transactions, savings events with target budgets and progress indicators,
+and checklists linked to individual events.
+
+\subsection{Problem Statement}
+
+Individuals lack a single lightweight tool that connects ordinary monthly
+expense tracking with saving towards specific upcoming events. Spreadsheets
+and generic budgeting applications often treat all spending as one stream.
+
+As a result, users may find it difficult to answer questions such as:
+
+\begin{itemize}
+    \item How much have I saved towards Diwali?
+    \item How much is remaining for an upcoming event?
+    \item What items are still left to arrange for a wedding?
+\end{itemize}
+
+SmartExpense addresses this problem by combining category-wise expense
+tracking, event-based savings goals and linked checklists within one
+interface.
+
+\section{Project Objectives}
+
+The core objectives of the SmartExpense project are:
+
+\begin{enumerate}
+    \item \textbf{Centralised Spending Dashboard:} Provide a single monthly
+    overview of total spending, remaining budget, upcoming events and
+    category-wise spending.
+
+    \item \textbf{Transaction Logging:} Allow transactions to be added
+    manually or imported through a CSV file.
+
+    \item \textbf{Event-Based Savings Tracking:} Allow users to create
+    events with a target date and budget and track savings progress using
+    visual progress indicators.
+
+    \item \textbf{Linked Checklists:} Provide event-specific notes and
+    checklists so planning tasks remain connected to their related events.
+
+    \item \textbf{Consistent Interface:} Provide a shared sidebar layout
+    across Dashboard, Transactions, Events, Notes and Profile screens.
+
+    \item \textbf{Foundation for Full-Stack Development:} Build and validate
+    a complete frontend prototype that can later be connected to a backend,
+    database and predictive spending service.
+\end{enumerate}
+
+
+% =================================================
+% CHAPTER 2
+% =================================================
+
+\chapter{Methodology and Design}
+
+\section{System Architecture}
+
+\subsection{High-Level Design}
+
+At the current frontend-only stage, SmartExpense is organised into three
+main layers:
+
+\begin{enumerate}
+    \item Presentation Layer
+    \item Client Logic Layer
+    \item Local Data Store
+\end{enumerate}
+
+The Presentation Layer consists of static HTML and CSS pages. The Client
+Logic Layer is implemented using \texttt{script.js}, which reads and writes
+application data. The Local Data Store uses the browser's
+\texttt{localStorage}.
+
+The backend Application Layer is planned for a future phase.
+
+% Add architecture image here
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{ChatGPT Image Sep 14, 2026, 09_32_57 AM.png}
+    \caption{My Image}
+    \label{fig:myimage}
+\end{figure}
+
+The current application flow is as follows:
+
+\begin{enumerate}
+    \item A page is loaded.
+    \item \texttt{script.js} checks and seeds sample data on the first run.
+    \item Relevant helper functions read data from \texttt{localStorage}.
+    \item The page render function creates cards, tables or grids.
+    \item Add or edit operations update the stored data.
+    \item The page is immediately re-rendered.
+\end{enumerate}
+
+No network request is made in the current frontend prototype.
+
+\subsection{Technical Stack}
+
+The SmartExpense prototype uses the following technologies:
+
+\begin{enumerate}
+    \item \textbf{Markup and Styling:} HTML5 and CSS3.
+    \item \textbf{Typography:} Google Fonts, including Playfair Display and Inter.
+    \item \textbf{Client Scripting:} Vanilla JavaScript using a shared
+    \texttt{script.js} file.
+    \item \textbf{Client-Side Persistence:} Browser \texttt{localStorage}.
+    \item \textbf{Icons:} Font Awesome and Unicode glyphs.
+    \item \textbf{Development Environment:} Standard HTML, CSS and JavaScript
+    development tested directly in the browser.
+    \item \textbf{Version Control:} Git.
+\end{enumerate}
+
+
+\section{Implementation Details}
+
+\subsection{Module 1: Core Screens}
+
+The core module implements the shared application shell and Dashboard.
+
+\begin{enumerate}
+    \item \textbf{Login Screen:} Contains an email and password form with
+    client-side required-field validation. Successful submission redirects
+    the user to the Dashboard.
+
+    \item \textbf{Shared Sidebar:} Provides navigation links for Dashboard,
+    Transactions, Events, Notes and Profile.
+
+    \item \textbf{Dashboard:} Displays summary cards, category-wise spending,
+    recent transactions and upcoming events.
+
+    \item \textbf{seedDefaultsIfEmpty():} Populates \texttt{localStorage}
+    with realistic sample data on the first run.
+\end{enumerate}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{pipeline.png}
+    \caption{Core page-load and Render pipeline}
+    \label{fig:myimage}
+\end{figure}
+
+
+\subsection{Module 2: Secondary Features}
+
+Three additional modules extend SmartExpense to its full frontend scope.
+
+\begin{enumerate}
+    \item \textbf{Transactions:} Displays transactions in a sortable table
+    with merchant, category, amount, date and entry type. It supports manual
+    transaction addition and CSV import.
+
+    \item \textbf{Events:} Displays savings events with target dates,
+    days-remaining status, budgets and savings progress bars.
+
+    \item \textbf{Notes:} Provides event-linked checklists with checkable
+    items whose completion state is saved in \texttt{localStorage}.
+
+    \item \textbf{Profile:} Allows users to update their name, email and
+    monthly budget.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+     \includegraphics[width=0.9\textwidth]{51ec99dd-f4f7-4283-9482-3b4490b1ce16.png}
+    
+    \caption{Secondary Feature Flow}
+    \label{fig:secondaryflow}
+\end{figure}
+
+
+% =================================================
+% CHAPTER 3
+% =================================================
+
+\chapter{Results and Evaluation}
+
+\section{Testing Methodology}
+
+Since the prototype does not currently contain a backend, testing was
+performed entirely in the browser. Each of the six screens was loaded and
+tested manually:
+
+\begin{itemize}
+    \item Login
+    \item Dashboard
+    \item Transactions
+    \item Events
+    \item Notes
+    \item Profile
+\end{itemize}
+
+The browser DevTools console and DOM inspector were used to check that
+elements populated correctly and that no JavaScript errors occurred.
+The browser's \texttt{localStorage} was also inspected after add and edit
+operations to confirm that application data was stored correctly.
+
+\begin{figure}[H]
+    \centering
+     \includegraphics[width=0.85\textwidth]{3e3b5047-20ad-4636-b620-88e63f1c3c3a.png}
+   
+    \caption{Manual Page-by-Page Testing Framework}
+    \label{fig:testing}
+\end{figure}
+
+
+\section{Feature Completion Status}
+
+Table \ref{tab:features} summarises the current status of the planned
+SmartExpense features.
+
+\begin{table}[H]
+\centering
+\caption{SmartExpense Feature Completion Status}
+\label{tab:features}
+
+\renewcommand{\arraystretch}{1.4}
+
+\begin{tabular}{|p{5cm}|p{5cm}|p{3cm}|}
+\hline
+\textbf{Capability} & \textbf{Current State} & \textbf{Status} \\
+\hline
+
+Dashboard summary cards and category chart &
+Working from localStorage &
+Done (Frontend) \\
+\hline
+
+Add transaction / CSV import &
+Working with prompt-based UI &
+Done (Frontend) \\
+\hline
+
+Event creation and savings progress &
+Working with prompt-based UI &
+Done (Frontend) \\
+\hline
+
+Event-linked checklists &
+Working, toggle persists &
+Done (Frontend) \\
+\hline
+
+Profile and budget editing &
+Working, writes to profile &
+Done (Frontend) \\
+\hline
+
+User authentication / sessions &
+Form only, no backend verification &
+Pending \\
+\hline
+
+Persistent multi-device storage &
+Single-browser localStorage only &
+Pending \\
+\hline
+
+Predicted spending forecast &
+Placeholder card in UI &
+Pending \\
+\hline
+
+Spending anomaly alert &
+Markup present but not connected &
+Pending \\
+\hline
+
+\end{tabular}
+\end{table}
+
+
+\section{Analysis}
+
+At the current stage, the frontend prototype demonstrates the intended
+SmartExpense user experience, including dashboard overview, transaction
+logging, event-based savings and linked checklists.
+
+The prototype confirms that the main data model consisting of transactions,
+events, notes and profile information can support the application's main
+features.
+
+The primary remaining work includes:
+
+\begin{itemize}
+    \item Replacing \texttt{localStorage} with a backend and database.
+    \item Adding real user authentication.
+    \item Implementing persistent multi-device storage.
+    \item Connecting the predicted-spending feature to an analysis service.
+    \item Implementing spending anomaly detection.
+\end{itemize}
+
+
+% =================================================
+% CHAPTER 4
+% =================================================
+
+\chapter{Conclusion}
+
+\section{Summary of Work}
+
+This project focused on building SmartExpense, a web application that allows
+users to track everyday spending and save towards specific upcoming events
+from a single dashboard.
+
+A frontend-only prototype was designed and implemented with the following
+screens:
+
+\begin{itemize}
+    \item Login
+    \item Dashboard
+    \item Transactions
+    \item Events
+    \item Notes
+    \item Profile
+\end{itemize}
+
+These screens share a client-side data model stored in browser
+\texttt{localStorage}. The prototype was validated using realistic sample
+data and manual testing of each screen and interaction.
+
+\section{Key Findings}
+
+The major findings of the project are:
+
+\begin{enumerate}
+    \item A client-side model containing transactions, events, notes and
+    profile information is sufficient to represent the complete frontend
+    SmartExpense experience.
+
+    \item Using one shared \texttt{script.js} file allows helper functions
+    for formatting, date calculations and localStorage operations to be
+    reused across multiple pages.
+
+    \item Using \texttt{localStorage} during the prototype stage was an
+    effective way to validate the complete user interface before implementing
+    a backend database.
+\end{enumerate}
+
+
+\section{Future Work and Recommendations}
+
+The next phase of the SmartExpense project will include:
+
+\begin{enumerate}
+    \item Development of a backend REST API.
+    \item Integration of a persistent database.
+    \item Real user authentication with sign-up, login and logout.
+    \item Multi-device data access.
+    \item A predictive spending service.
+    \item Spending anomaly detection.
+    \item Server-side validation for transactions and CSV imports.
+    \item Replacing browser \texttt{prompt()} dialogs with proper forms
+    and modals.
+    \item Load, response-time and usability testing.
+\end{enumerate}
+
+
+\section{Final Remarks}
+
+SmartExpense addresses the problem of everyday spending and event-based
+saving being managed through separate and disconnected tools. The frontend
+prototype demonstrates that these features can be integrated into one
+coherent interface.
+
+The completed prototype provides a dashboard, transaction ledger,
+event-based savings tracking and linked checklists using a shared
+client-side data model. The next major step is to connect this validated
+interface to a real backend and evaluate the complete system at a realistic
+scale.
+
+% =================================================
+% END DOCUMENT
+% =================================================
+
+\end{document}

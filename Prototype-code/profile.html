@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SmartExpense — Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="blob3"></div>
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="s-brand">
+
+        <div class="s-logo">SmartExpense</div>
+        <div class="s-sub">smart expense tracker</div>
+      </div>
+      <nav class="s-nav">
+        <a href="dashboard.html" class="s-item"><span class="s-icon">⊞</span> Dashboard</a>
+        <a href="transactions.html" class="s-item"><span class="s-icon">↕</span> Transactions</a>
+        <a href="events.html" class="s-item"><span class="s-icon">◎</span> Events</a>
+        <a href="notes.html" class="s-item"><span class="s-icon">≡</span> Notes</a>
+        <a href="profile.html" class="s-item active"><span class="s-icon">○</span> Profile</a>
+      </nav>
+      <div class="s-user">
+        <div class="s-uname"></div>
+        <div class="s-uemail"></div>
+        <a href="index.html" class="s-item"><span class="s-icon">→</span> Log out</a>
+      </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+      <div class="pg-title">Profile</div>
+      <div class="pg-sub">Account and budget settings</div>
+
+      <div class="glass profile-card">
+        <div class="field-group">
+          <label class="field-label" for="fName">Name</label>
+          <input class="field-input" id="fName" type="text"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="fEmail">Email</label>
+          <input class="field-input" id="fEmail" type="email"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="fBudget">Monthly budget (₹)</label>
+          <input class="field-input" id="fBudget" type="number" min="0"/>
+        </div>
+        <button class="btn btn-primary" id="saveProfileBtn">Save Changes</button>
+        <div class="save-msg" id="saveMsg">Saved.</div>
+      </div>
+    </div>
+  </div>
+
+<script src="script.js"></script></body>
+</html>
