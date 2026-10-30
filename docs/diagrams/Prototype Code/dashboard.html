@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SmartExpense — Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --chocolate: #5C2E2E;
+      --blues:     #2E3F5C;
+      --apricot:   #D4B483;
+      --apricot-m: #C4A06A;
+      --cream:     #FAF5EC;
+      --light:     #F2E6D0;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--light);
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      width: 400px; height: 400px;
+      background: var(--chocolate);
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.18;
+      top: -120px; right: 80px;
+      pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      width: 320px; height: 320px;
+      background: var(--blues);
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.15;
+      bottom: -80px; right: 300px;
+      pointer-events: none; z-index: 0;
+    }
+    .blob3 {
+      position: fixed;
+      width: 220px; height: 220px;
+      background: var(--apricot);
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: 0.12;
+      top: 50%; right: 40px;
+      pointer-events: none; z-index: 0;
+    }
+    .app { display: flex; height: 100vh; position: relative; z-index: 1; }
+    .sidebar {
+      width: 200px; flex-shrink: 0;
+      background: var(--blues);
+      display: flex; flex-direction: column;
+      padding: 24px 14px;
+    }
+    .s-brand {
+      padding: 0 8px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 18px;
+    }
+    .s-logo { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--cream); }
+    .s-sub { font-size: 10px; color: rgba(212,180,131,0.4); margin-top: 2px; }
+    .s-nav { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+    .s-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 8px;
+      border: none; cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px; font-weight: 500;
+      text-align: left; width: 100%;
+      text-decoration: none;
+      color: rgba(212,180,131,0.55);
+      background: transparent;
+      transition: all 0.15s;
+    }
+    .s-item:hover { background: rgba(255,255,255,0.08); color: var(--apricot); }
+    .s-item.active { background: var(--chocolate); color: var(--cream); font-weight: 600; }
+    .s-icon { font-size: 15px; width: 18px; text-align: center; }
+    .s-user { padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .s-uname { font-size: 12px; font-weight: 600; color: var(--cream); padding: 0 10px; }
+    .s-uemail { font-size: 10px; color: rgba(212,180,131,0.4); padding: 2px 10px 10px; }
+    .main { flex: 1; overflow-y: auto; padding: 28px 24px; }
+    .pg-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: #2E1A1A; margin-bottom: 2px; }
+    .pg-sub { font-size: 12px; color: var(--apricot-m); margin-bottom: 20px; }
+    .glass {
+      background: rgba(250,245,236,0.55);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(212,180,131,0.28);
+      border-radius: 14px;
+    }
+    .cards-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 14px; }
+    .scard { padding: 16px 18px; }
+    .sc-label { font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--chocolate); opacity: 0.65; margin-bottom: 8px; }
+    .sc-value { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: #2E1A1A; line-height: 1; }
+    .sc-value.accent { color: var(--blues); }
+    .sc-sub { font-size: 10px; color: var(--apricot-m); margin-top: 5px; }
+    .empty-dash { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: rgba(46,26,26,0.18); line-height: 1; }
+    .empty-hint { font-size: 10px; color: rgba(196,160,106,0.45); margin-top: 5px; }
+    .alert {
+      background: rgba(92,46,46,0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(212,180,131,0.18);
+      border-radius: 10px;
+      padding: 11px 18px;
+      font-size: 12px; color: var(--cream);
+      display: none; align-items: center; gap: 10px;
+      margin-bottom: 14px;
+    }
+    .alert.show { display: flex; }
+    .chart-wrap { padding: 20px; margin-bottom: 14px; }
+    .chart-title { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: #2E1A1A; margin-bottom: 16px; }
+    .chart-empty { height: 130px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: rgba(196,160,106,0.5); font-style: italic; }
+    .bars { display: flex; align-items: flex-end; gap: 16px; height: 130px; display: none; }
+    .bar-col { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
+    .bar-amt { font-size: 9px; font-weight: 600; color: var(--blues); min-height: 13px; }
+    .bar { width: 100%; border-radius: 5px 5px 0 0; transition: opacity 0.15s; cursor: pointer; background: rgba(212,180,131,0.2); min-height: 4px; }
+    .bar:hover { opacity: 0.75; }
+    .bar-lbl { font-size: 10px; color: var(--chocolate); opacity: 0.6; text-align: center; }
+    .bottom-row { display: grid; grid-template-columns: 1.3fr 1fr; gap: 12px; }
+    .bot-box { padding: 18px 20px; }
+    .bot-title { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: #2E1A1A; margin-bottom: 14px; }
+    .txn-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid rgba(212,180,131,0.18); font-size: 12px; color: #2E1A1A; }
+    .txn-row:last-child { border-bottom: none; }
+    .txn-merchant { flex: 1; font-weight: 500; }
+    .txn-date { font-size: 10px; color: var(--apricot-m); }
+    .txn-amt { font-weight: 700; color: var(--blues); }
+    .badge { font-size: 9px; font-weight: 600; padding: 2px 8px; border-radius: 5px; }
+    .ev-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(212,180,131,0.18); }
+    .ev-row:last-child { border-bottom: none; }
+    .ev-name { font-size: 12px; font-weight: 600; color: #2E1A1A; }
+    .ev-date { font-size: 10px; color: var(--apricot-m); margin-top: 2px; }
+    .days-badge { font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+    .days-badge.urgent { background: var(--chocolate); color: var(--cream); }
+    .days-badge.soon   { background: rgba(92,46,46,0.12); color: var(--chocolate); }
+    .days-badge.ok     { background: rgba(46,63,92,0.12); color: var(--blues); }
+    .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 16px; text-align: center; }
+    .empty-icon { font-size: 28px; margin-bottom: 8px; opacity: 0.25; }
+    .empty-state p { font-size: 12px; color: rgba(196,160,106,0.55); line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="blob3"></div>
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="s-brand">
+        <div class="s-logo">SmartExpense</div>
+        <div class="s-sub">smart expense tracker</div>
+      </div>
+      <nav class="s-nav">
+        <a href="dashboard.html" class="s-item active"><span class="s-icon">⊞</span> Dashboard</a>
+        <a href="transactions.html" class="s-item"><span class="s-icon">↕</span> Transactions</a>
+        <a href="events.html" class="s-item"><span class="s-icon">◎</span> Events</a>
+        <a href="notes.html" class="s-item"><span class="s-icon">≡</span> Notes</a>
+        <a href="profile.html" class="s-item"><span class="s-icon">○</span> Profile</a>
+      </nav>
+      <div class="s-user">
+        <div class="s-uname"></div>
+        <div class="s-uemail"></div>
+        <a href="index.html" class="s-item"><span class="s-icon">→</span> Log out</a>
+      </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+      <div class="pg-title">Dashboard</div>
+      <div class="pg-sub">September 2026 overview</div>
+
+      <!-- summary cards -->
+      <div class="cards-row">
+        <div class="glass scard">
+          <div class="sc-label">Spent this month</div>
+          <div class="empty-dash" id="valSpent">—</div>
+          <div class="empty-hint" id="subSpent">No transactions yet</div>
+        </div>
+        <div class="glass scard">
+          <div class="sc-label">Budget remaining</div>
+          <div class="empty-dash" id="valBudget">—</div>
+          <div class="empty-hint" id="subBudget">Set budget in Profile</div>
+        </div>
+        <div class="glass scard">
+          <div class="sc-label">Upcoming events</div>
+          <div class="empty-dash" id="valEvents">—</div>
+          <div class="empty-hint" id="subEvents">No events added</div>
+        </div>
+        <div class="glass scard">
+          <div class="sc-label">Predicted — Oct</div>
+          <div class="empty-dash" id="valPredict">—</div>
+          <div class="empty-hint">Connects to ML service</div>
+        </div>
+      </div>
+
+      <!-- anomaly alert -->
+      <div class="alert" id="anomalyAlert">
+        ⚠ <span id="anomalyMsg"></span>
+      </div>
+
+      <!-- bar chart -->
+      <div class="glass chart-wrap">
+        <div class="chart-title">Spending by category</div>
+        <div class="chart-empty" id="chartEmpty">Add transactions to see your spending breakdown</div>
+        <div class="bars" id="barsContainer">
+          <div class="bar-col"><div class="bar-amt" id="amt-food"></div><div class="bar" id="bar-food"></div><div class="bar-lbl">Food</div></div>
+          <div class="bar-col"><div class="bar-amt" id="amt-travel"></div><div class="bar" id="bar-travel"></div><div class="bar-lbl">Travel</div></div>
+          <div class="bar-col"><div class="bar-amt" id="amt-shopping"></div><div class="bar" id="bar-shopping"></div><div class="bar-lbl">Shopping</div></div>
+          <div class="bar-col"><div class="bar-amt" id="amt-bills"></div><div class="bar" id="bar-bills"></div><div class="bar-lbl">Bills</div></div>
+          <div class="bar-col"><div class="bar-amt" id="amt-gifts"></div><div class="bar" id="bar-gifts"></div><div class="bar-lbl">Gifts</div></div>
+        </div>
+      </div>
+
+      <!-- bottom row -->
+      <div class="bottom-row">
+        <div class="glass bot-box">
+          <div class="bot-title">Recent transactions</div>
+          <div class="empty-state" id="txnEmpty">
+            <div class="empty-icon">↕</div>
+            <p>No transactions yet.<br/>Add one from the Transactions page.</p>
+          </div>
+          <div id="txnList"></div>
+        </div>
+        <div class="glass bot-box">
+          <div class="bot-title">Upcoming events</div>
+          <div class="empty-state" id="evtEmpty">
+            <div class="empty-icon">◎</div>
+            <p>No upcoming events.<br/>Add one from the Events page.</p>
+          </div>
+          <div id="evtList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const txns   = JSON.parse(localStorage.getItem('spendsight_txns')   || '[]');
+    const events = JSON.parse(localStorage.getItem('spendsight_events') || '[]');
+    const budget = parseFloat(localStorage.getItem('spendsight_budget') || '0');
+
+    const fmt = n => '₹' + parseFloat(n).toLocaleString('en-IN');
+
+    // cards
+    const totalSpent = txns.reduce((s,t) => s + parseFloat(t.amount||0), 0);
+    if (totalSpent > 0) {
+      document.getElementById('valSpent').textContent = fmt(totalSpent);
+      document.getElementById('valSpent').className = 'sc-value';
+      document.getElementById('subSpent').textContent = 'Sep 2026';
+      document.getElementById('subSpent').className = 'sc-sub';
+    }
+    if (budget > 0) {
+      const rem = budget - totalSpent;
+      document.getElementById('valBudget').textContent = fmt(rem);
+      document.getElementById('valBudget').className = 'sc-value';
+      document.getElementById('subBudget').textContent = 'of ' + fmt(budget);
+      document.getElementById('subBudget').className = 'sc-sub';
+    }
+    if (events.length > 0) {
+      document.getElementById('valEvents').textContent = events.length;
+      document.getElementById('valEvents').className = 'sc-value';
+      document.getElementById('subEvents').textContent = 'next 60 days';
+      document.getElementById('subEvents').className = 'sc-sub';
+    }
+
+    // bar chart
+    const catColors = { Food:'#5C2E2E', Travel:'#2E3F5C', Shopping:'#D4B483', Bills:'#C4A06A', Gifts:'#7A3A3A' };
+    const catTotals = { Food:0, Travel:0, Shopping:0, Bills:0, Gifts:0 };
+    txns.forEach(t => { if (catTotals[t.category] !== undefined) catTotals[t.category] += parseFloat(t.amount||0); });
+    const maxCat = Math.max(...Object.values(catTotals));
+    if (maxCat > 0) {
+      document.getElementById('chartEmpty').style.display = 'none';
+      document.getElementById('barsContainer').style.display = 'flex';
+      Object.entries(catTotals).forEach(([cat, val]) => {
+        const key = cat.toLowerCase();
+        const bar = document.getElementById('bar-' + key);
+        const amt = document.getElementById('amt-' + key);
+        if (bar && val > 0) {
+          bar.style.height = Math.max((val/maxCat)*100, 4) + '%';
+          bar.style.background = catColors[cat];
+          amt.textContent = fmt(val);
+        }
+      });
+    }
+
+    // transactions
+    const badgeStyle = {
+      Food:'background:#5C2E2E15;color:#5C2E2E', Travel:'background:#2E3F5C15;color:#2E3F5C',
+      Shopping:'background:#D4B48322;color:#C4A06A', Bills:'background:#C4A06A22;color:#C4A06A',
+      Gifts:'background:#7A3A3A18;color:#7A3A3A'
+    };
+    if (txns.length > 0) {
+      document.getElementById('txnEmpty').style.display = 'none';
+      const list = document.getElementById('txnList');
+      [...txns].reverse().slice(0,6).forEach(t => {
+        list.innerHTML += `<div class="txn-row">
+          <span class="txn-merchant">${t.merchant||'—'}</span>
+          <span class="badge" style="${badgeStyle[t.category]||''}">${t.category||''}</span>
+          <span class="txn-date">${t.date||''}</span>
+          <span class="txn-amt">${fmt(t.amount)}</span>
+        </div>`;
+      });
+    }
+
+    // events
+    const daysLeft = d => Math.ceil((new Date(d) - new Date()) / 86400000);
+    const dClass   = d => d<=10 ? 'urgent' : d<=20 ? 'soon' : 'ok';
+    if (events.length > 0) {
+      document.getElementById('evtEmpty').style.display = 'none';
+      const list = document.getElementById('evtList');
+      [...events].filter(e => daysLeft(e.date)>=0)
+        .sort((a,b) => new Date(a.date)-new Date(b.date))
+        .slice(0,5).forEach(e => {
+          const d = daysLeft(e.date);
+          list.innerHTML += `<div class="ev-row">
+            <div><div class="ev-name">${e.name}</div>
+            <div class="ev-date">${new Date(e.date).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})}</div></div>
+            <span class="days-badge ${dClass(d)}">${d} days</span>
+          </div>`;
+        });
+    }
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

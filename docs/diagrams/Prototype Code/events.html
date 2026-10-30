@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SmartExpense — Events</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="blob3"></div>
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="s-brand">
+        <div class="s-logo">SmartExpense</div>
+        <div class="s-sub">smart expense tracker</div>
+      </div>
+      <nav class="s-nav">
+        <a href="dashboard.html" class="s-item"><span class="s-icon">⊞</span> Dashboard</a>
+        <a href="transactions.html" class="s-item"><span class="s-icon">↕</span> Transactions</a>
+        <a href="events.html" class="s-item active"><span class="s-icon">◎</span> Events</a>
+        <a href="notes.html" class="s-item"><span class="s-icon">≡</span> Notes</a>
+        <a href="profile.html" class="s-item"><span class="s-icon">○</span> Profile</a>
+      </nav>
+      <div class="s-user">
+        <div class="s-uname"></div>
+        <div class="s-uemail"></div>
+        <a href="index.html" class="s-item"><span class="s-icon">→</span> Log out</a>
+      </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+      <div class="page-header-row">
+        <div>
+          <div class="pg-title">Events</div>
+          <div class="pg-sub">Saving towards your celebrations</div>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" id="addEventBtn">+ Add Event</button>
+        </div>
+      </div>
+
+      <div class="events-grid" id="eventsGrid"></div>
+
+      <div class="glass empty-state" id="eventsEmptyState" style="display:none; margin-top:14px;">
+        <div class="empty-icon">◎</div>
+        <p>No events yet.<br/>Add one to start saving towards it.</p>
+      </div>
+    </div>
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>
